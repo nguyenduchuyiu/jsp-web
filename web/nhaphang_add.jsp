@@ -1,6 +1,13 @@
 <%-- File: nhaphang_add.jsp --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="jakarta.tags.core" %>
+<%
+    // Redirect nếu truy cập trực tiếp JSP (phải đi qua servlet để có dữ liệu)
+    if (request.getAttribute("nhaCungCapList") == null) {
+        response.sendRedirect(request.getContextPath() + "/admin/nhaphangadd");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>

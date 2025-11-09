@@ -1,0 +1,1 @@
+sudo mysql -u root -e "DROP DATABASE IF EXISTS web; CREATE DATABASE web CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;" && sudo mysql -u root web < web.sql 2>&1 | tail -3

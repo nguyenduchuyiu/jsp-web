@@ -7,6 +7,7 @@ public class ChiTietPhieuNhap {
     private String maPN;
     private String maSP;
     private String tenSP; // Thuộc tính bổ sung
+    private String hinhAnh; // Thuộc tính bổ sung
     private int soLuong;
     private BigDecimal giaNhap;
 
@@ -22,6 +23,9 @@ public class ChiTietPhieuNhap {
     
     public String getTenSP() { return tenSP; }
     public void setTenSP(String tenSP) { this.tenSP = tenSP; }
+    
+    public String getHinhAnh() { return hinhAnh; }
+    public void setHinhAnh(String hinhAnh) { this.hinhAnh = hinhAnh; }
 
     public int getSoLuong() { return soLuong; }
     public void setSoLuong(int soLuong) { this.soLuong = soLuong; }

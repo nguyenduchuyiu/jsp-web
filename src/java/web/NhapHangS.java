@@ -45,6 +45,20 @@ public class NhapHangS extends HttpServlet {
             req.setAttribute("error", "Lỗi CSDL khi tải dữ liệu nhập hàng.");
             e.printStackTrace();
         }
+        
+        // Chuyển thông báo từ session sang request và xóa khỏi session
+        if (session != null) {
+            String error = (String) session.getAttribute("error");
+            String success = (String) session.getAttribute("success_admin");
+            if (error != null) {
+                req.setAttribute("error", error);
+                session.removeAttribute("error");
+            }
+            if (success != null) {
+                req.setAttribute("success_admin", success);
+                session.removeAttribute("success_admin");
+            }
+        }
 
         // 6. Forward đến trang quản lý nhập hàng
         req.getRequestDispatcher("/nhaphang_manage.jsp").forward(req, resp);

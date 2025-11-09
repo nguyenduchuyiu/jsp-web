@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class DB {
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/web?useUnicode=true&characterEncoding=UTF-8";
-    private static final String USER = "root"; 
-    private static final String PASS = ""; 
+    private static final String USER = "webapp"; 
+    private static final String PASS = "webapp123"; 
 
     // Khối static để tải Driver chỉ MỘT LẦN khi class DB được load
     static {

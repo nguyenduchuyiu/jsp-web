@@ -1,5 +1,5 @@
 <%@ page pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <footer class="main-footer-area">
     <div class="legal-info-wrapper">
         <div class="legal-info">

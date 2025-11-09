@@ -1,6 +1,7 @@
 <%-- File: nhaphang_manage.jsp --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="jakarta.tags.core" %>
+<%@taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,7 @@
         <hr>
         
         <c:if test="${not empty error}"><div class="alert alert-danger">${error}</div></c:if>
+        <c:if test="${not empty success_admin}"><div class="alert alert-success">${success_admin}</div></c:if>
 
         <ul class="nav nav-tabs tabs-nh" id="nhapHangTabs" role="tablist">
             <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" data-bs-target="#qlDonDatHang">1. Lập Hóa Đơn</a></li>
@@ -38,7 +40,7 @@
                     <h4>Đơn đặt hàng chờ xử lý</h4>
                     <div>
                         <a href="nhapkho_manage.jsp" class="btn btn-info me-2"><i class="fa fa-box"></i> QL Nhập Kho</a> 
-                        <a href="${pageContext.request.contextPath}/nhaphang_add.jsp" class="btn btn-primary"><i class="fa fa-plus"></i> Lập Phiếu Nhập Mới</a>
+                        <a href="${pageContext.request.contextPath}/admin/nhaphangadd" class="btn btn-primary"><i class="fa fa-plus"></i> Lập Phiếu Nhập Mới</a>
                     </div>
                 </div>
 
@@ -46,10 +48,38 @@
                 
                 <table class="table table-bordered admin-table">
                     <thead class="table-dark">
-                        <tr><th>Mã PN</th><th>Ngày Lập</th><th>Nhà Cung Cấp</th><th>Tổng Tiền</th><th>Trạng Thái</th><th>Thao Tác</th></tr>
+                        <tr><th>Mã PN</th><th>Ngày Lập</th><th>Nhà Cung Cấp</th><th>Tổng Tiền</th><th>Thao Tác</th></tr>
                     </thead>
                     <tbody>
-                        </tbody>
+                        <c:choose>
+                            <c:when test="${not empty phieuNhapList}">
+                                <c:forEach var="pn" items="${phieuNhapList}">
+                                    <tr>
+                                        <td><strong>${pn.maPN}</strong></td>
+                                        <td><fmt:formatDate value="${pn.ngayLap}" pattern="dd/MM/yyyy HH:mm" /></td>
+                                        <td>${pn.tenNCC}</td>
+                                        <td class="text-end">${pn.tongTienVND}</td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/admin/viewphieunhap?maPN=${pn.maPN}" 
+                                               class="btn btn-sm btn-info me-1" 
+                                               title="Xem chi tiết">
+                                               <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a href="${pageContext.request.contextPath}/admin/deletephieunhap?maPN=${pn.maPN}" 
+                                               class="btn btn-sm btn-danger" 
+                                               title="Xóa phiếu nhập" 
+                                               onclick="return confirm('Bạn có chắc muốn xóa phiếu nhập ${pn.maPN}?');">❌</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">Chưa có phiếu nhập nào</td>
+                                </tr>
+                            </c:otherwise>
+                        </c:choose>
+                    </tbody>
                 </table>
             </div>
 
@@ -64,5 +94,15 @@
     
     <%@include file="footer.jspf" %>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Tự động ẩn thông báo sau 5 giây
+        setTimeout(function() {
+            var alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                var bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+    </script>
 </body>
 </html>
