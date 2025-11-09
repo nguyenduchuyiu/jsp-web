@@ -1,0 +1,114 @@
+/*
+ * admin.css - Styles dành riêng cho giao diện Quản trị viên (ADMIN PANEL)
+ * Mục đích: Ghi đè màu sắc và bố cục để phân biệt với giao diện Khách hàng.
+ */
+
+/* 1. Ghi đè màu nền Header chính (admin-header được định nghĩa trong header_admin.jspf) */
+#admin-header {
+    background-color: #3f51b5 !important; /* Màu xanh đậm hơn cho Admin */
+    border-bottom: 3px solid #ffc107; /* Thêm viền vàng nổi bật */
+}
+
+/* 2. Căn chỉnh logo và text Admin */
+#admin-header .logo-area {
+    align-items: center;
+}
+
+#admin-header .logo-text {
+    color: #FFC107 !important; /* Đổi màu chữ logo thành vàng */
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+/* 3. Style cho Top Bar (Chế độ Quản trị) */
+#admin-header .header-top-bar {
+    background-color: #303f9f !important; /* Màu xanh đậm nhất */
+}
+#admin-header .top-link {
+    color: #fff;
+    opacity: 0.9;
+}
+
+/* 4. Style cho các nút hành động của Admin */
+.admin-actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: 8px; /* Khoảng cách giữa các nút */
+}
+
+.admin-actions .btn {
+    font-size: 0.9em;
+    font-weight: 400;
+}
+
+.admin-actions .btn-return {
+    /* Ví dụ: Nút quay lại trang chủ */
+    border: 1px solid #fff;
+}
+
+/* 5. Vùng Nội dung Chính (để đảm bảo không bị Header che) */
+/* Cần bù trừ padding-top cho trang Admin nếu Header Admin cũng là fixed */
+body.admin-page .page-content {
+    padding-top: 100px; 
+}
+
+/* 6. TẦNG DƯỚI CÙNG: TOP MENU (Trải đều) */
+.top-menu {
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    /* THAY ĐỔI: Tăng padding dọc cho thanh menu */
+    padding: 8px 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.top-menu .container-fluid {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    /* THAY ĐỔI: Loại bỏ chiều cao cứng nhắc để nó tự co giãn theo padding */
+    /* height: 5px; */ 
+    
+    /* Đảm bảo nội dung có khoảng đệm ngang */
+    padding: 15px 15px; 
+}
+.top-menu a {
+    color: var(--text-dark);
+    font-weight: 600;
+    /* THAY ĐỔI: Tăng padding cho từng mục */
+    padding: 0 12px; 
+    text-decoration: none;
+    font-size: 0.95em;
+    flex-shrink: 0;
+}
+.admin-table img {
+    max-width: 35px; 
+    height: auto;
+    object-fit: cover;
+}
+
+        .sidebar { max-height: 80vh; overflow-y: auto; background-color: #f8f9fa; border-right: 1px solid #eee; padding: 0;}
+        .chat-list-item { padding: 10px 15px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .chat-list-item:hover { background-color: #e9ecef; }
+        .chat-list-item.active { background-color: #cfe2ff; font-weight: bold; }
+        
+        .chat-content { height: 75vh; display: flex; flex-direction: column; }
+        .chat-history { flex-grow: 1; overflow-y: auto; padding: 15px; background-color: #fff; }
+        .message-row { display: flex; margin-bottom: 10px; }
+        .user-message { justify-content: flex-start; } /* User là Khách hàng (Sát lề trái) */
+        .admin-message { justify-content: flex-end; } /* Admin là người trả lời (Sát lề phải) */
+        
+        .user-bubble { background-color: #fff3cd; border: 1px solid #ffeeba; padding: 8px 12px; border-radius: 15px; max-width: 70%; word-wrap: break-word; }
+        .admin-bubble { background-color: #d4edda; padding: 8px 12px; border-radius: 15px; max-width: 70%; word-wrap: break-word; }
+        .time-label { font-size: 0.7em; color: #999; margin-top: 3px; }
+        .status-waiting { color: #dc3545; font-weight: bold; }
+        .status-open { color: #0d6efd; }
+        
+         .tabs-nh { border-bottom: none; }
+        .tabs-nh .nav-link { 
+            background-color: #eee; 
+            border: 1px solid #ddd; 
+            margin-right: 5px; 
+            font-weight: bold;
+        }
+        .tabs-nh .nav-link.active {
+            background-color: #3f51b5;
+            color: white !important;}

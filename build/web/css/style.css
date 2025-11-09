@@ -1,0 +1,574 @@
+:root {
+    --longchau-blue-dark: #33cccc; /* Màu xanh đậm (Được chọn làm nền solid) */
+    --longchau-blue-light: #bfefff; /* Màu xanh rất nhạt */
+    --longchau-orange-light: #ff8247;
+    --longchau-red: #ff3333; 
+    --longchau-bg-light: #f0f8ff; 
+    --text-dark: #333;
+}
+html, body {
+     margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow-x: hidden; 
+    display: block;
+}
+
+.header-main-row .container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+     
+    height: 60px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+.header-logo {
+    height: 45px; 
+    margin-right: 10px;
+}
+.logo-text {
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+}
+.main-header {
+    /* Loại bỏ gradient, sử dụng MÀU ĐƠN NHẤT */
+    background: #33cccc;
+    color: white;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.main-header .container-fluid {
+    max-width: 1250px; /* Giới hạn chiều rộng nội dung bên trong */
+    margin: 0 auto; /* Căn giữa nội dung */
+}
+/* =================== CẬP NHẬT CSS CHO PHẦN THÔNG TIN PHÁP LÝ =================== */
+
+.main-footer-area {
+    /* Đặt màu nền xanh ngọc cho toàn bộ khối này */
+    background-color:#33cccc !important; /* Dùng !important nếu cần */
+    color: #f0f0f0; /* Giữ màu chữ sáng */
+    padding: 20px 0;
+    width: 100%;
+}
+
+.legal-info-wrapper {
+    background-color: #33cccc; /* Màu xanh ngọc bạn muốn */
+    background-image: none;
+    color: white; 
+    padding: 20px 0; /* Padding cần thiết */
+    width: 100%;
+    
+    /* Giới hạn nội dung bên trong */
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 15px; 
+    text-align: center;
+}
+
+.legal-info p {
+    color: white; /* BUỘC MÀU TRẮNG CHO ĐOẠN VĂN BẢN */
+    margin-bottom: 5px;
+    line-height: 1.4;
+    font-size: 0.7em; 
+    opacity: 0.9;
+}
+
+.legal-info a {
+    color: white; /* BUỘC MÀU TRẮNG CHO LIÊN KẾT */
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+
+.copyright-text-main {
+    font-weight: 600;
+    margin-bottom: 10px !important;
+}
+
+.responsible-person {
+    margin-top: 15px !important;
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+/* TRONG style.css: Sửa khối 3. TẦNG 1: TOP BAR */
+.header-top-bar {
+    background-color: transparent; 
+    padding: 5px 0; /* Giữ padding này là cần thiết */
+    font-size: 0.90em;
+    width: 100%;
+    height: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 2. SỬ DỤNG CONTAINER-FLUID ĐỂ CĂN CHỈNH */
+.header-top-bar .container-fluid {
+    /* Đảm bảo nội dung nằm trong khu vực 1250px và được căn giữa */
+    max-width: 1250px;
+    margin: 0 auto; 
+    display: flex;
+    justify-content: flex-end; /* Quan trọng: Đẩy nội dung sang phải */
+    align-items: center;
+    padding-left: 15px; 
+    padding-right: 15px;
+}
+
+/* 3. STYLE CHO CÁC LIÊN KẾT TOP BAR */
+.header-top-bar .top-link {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px; /* Khoảng cách giữa Tải ứng dụng và Tư vấn ngay */
+    display: flex;
+    
+    align-items: center;
+}
+.header-top-bar .top-link i {
+    margin-right: 5px; /* Khoảng cách giữa icon và chữ */
+}
+/* 4. TẦNG 2: LOGO, SEARCH, ACTIONS */
+.header-main-row {
+   /* Padding 0 vì container-fluid sẽ lo phần padding ngang */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+.logo-area {
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+.logo-text {
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+.search-box {
+    width: 450px; 
+    max-width: 600px;
+    background-color: white;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-grow: 1; 
+    margin: 0 20px;
+}
+.search-box input {
+    padding: 10px 15px;
+    border: none;
+    flex-grow: 1;
+}
+.search-btn {
+    background-color: var(--longchau-red) !important; /* Màu đỏ rực */
+    color: white;
+    padding: 0 15px; /* Điều chỉnh padding cho nút */
+    border: none !important; 
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    justify-content: center;
+}
+
+.search-box .fa-microphone {
+    padding: 10px; 
+    color: var(--longchau-red); /* Đặt lại màu đỏ để khớp với ảnh mẫu */
+    cursor: pointer;
+}
+.user-actions {
+    display: flex;
+    align-items: center;
+    min-width: 320px;
+/*    flex-shrink: 0;
+    flex-grow: 0;*/
+}
+.user-actions .btn-login-style {
+    color: white;
+    text-decoration: none;
+    padding: 0px 0px;
+     margin: 0 15px;
+     /* Quan trọng: Bỏ hướng cột (Icon trên chữ dưới) */
+    flex-direction: row !important;
+   /* Buộc nội dung không được xuống dòng */
+    white-space: nowrap !important;
+    /* Giảm padding ngang tối đa để tiết kiệm không gian */
+    padding: 10px 5px !important; 
+    /* Giảm margin giữa các nút nếu còn tồn tại */
+    margin: 0 5px !important; 
+    /* Giảm cỡ chữ xuống mức tối thiểu */
+    font-size: 1em !important; 
+    /* Đảm bảo nó không bị giới hạn chiều rộng quá mức */
+    min-width: unset !important;
+/*    margin-right: 30px;
+    margin-left:30px;*/
+}
+
+/* === MỚI: STYLE CHO NÚT GIỎ HÀNG KIỂU BUTTON CAM NHẠT === */
+.user-actions .btn-cart {
+    background-color: var(--longchau-orange-light); /* Màu cam nhạt */
+    color: white;
+    font-weight: bold;
+    padding: 10px 18px !important;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left:30px;
+    border: none; /* Đảm bảo không có viền thừa */
+    cursor: pointer;
+    display: flex; /* Dùng flex để căn giữa icon và text */
+    align-items: center;
+    flex-direction: row !important; 
+    white-space: nowrap !important;
+    padding: 10px 5px !important; 
+    margin: 0 5px !important; 
+    font-size: 1em !important; 
+    min-width: unset !important;
+}
+.user-actions .btn-login-style i {
+    /* Kéo icon về bên trái chữ */
+    margin-right: 3px !important; 
+    /* Đảm bảo icon không bị xuống dòng */
+    margin-bottom: 0 !important;
+    /* Điều chỉnh lại cỡ icon nếu cần */
+    font-size: 1em !important; 
+}
+
+/* 5. TẦNG 3: SUB MENU DƯỚI SEARCH BAR */
+.header-sub-menu {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0; /* Padding 0 vì container-fluid sẽ lo phần padding ngang */
+    font-size: 0.9em;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.header-sub-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 0 5px;
+}
+
+/* 6. TẦNG DƯỚI CÙNG: TOP MENU (Trải đều) */
+.top-menu {
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+     padding: 0px 0px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.top-menu .container-fluid {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    height: 5px;
+}
+.top-menu a {
+    color: var(--text-dark);
+    font-weight: 600;
+    padding: 0 10px;
+    text-decoration: none;
+    font-size: 0.95em;
+    flex-shrink: 0;
+}
+.top-menu a:hover {
+    color: var(--longchau-red);
+}
+
+/* Breadcrumb */
+.breadcrumb-row {
+    background-color: var(--longchau-bg-light);
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9em;
+    color: #666;
+}
+.breadcrumb-row a {
+    color: var(--longchau-blue-dark);
+    text-decoration: none;
+}
+
+/* =================== CSS BỔ SUNG CHO LOGO =================== */
+
+.logo-area {
+    /* Đảm bảo logo và text nằm cùng hàng */
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+
+.header-logo {
+    /* Điều chỉnh kích thước ảnh logo cho phù hợp */
+    height: 90px; 
+    margin-right: 25px; /* Khoảng cách giữa ảnh và text */
+}
+
+.logo-text {
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+}
+
+.system-info-bar {
+    background-color: var(--longchau-blue-solid); 
+    color: white;
+    padding: 15px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.system-info-bar .content-wrapper {
+    max-width: 1250px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 15px; 
+}
+
+.main-footer-area {
+    /* Nền đen cho phần thông tin liên hệ */
+    background-color: #33ccff; 
+    color: #f0f0f0;
+    padding: 20px 0 0 0; /* Xóa padding dưới cùng */
+}
+.main-footer-area h4 {
+    color: #ffc107;
+    border-bottom: 1px solid #555;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+.main-footer-area .footer-content {
+    max-width: 1250px;
+    margin: auto;
+    padding: 0 15px;
+}
+
+/* DÒNG BẢN QUYỀN CUỐI CÙNG (Nền trắng/xám nhạt - Giống ảnh Long Châu chi tiết) */
+.final-copyright-bar {
+    background-color: #58b4ff; /* Nền xám nhạt */
+    color: #666;
+    font-size: 0.85em;
+    padding: 10px 0;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+}
+.final-copyright-bar p {
+    margin: 0;
+    /* Đặt max-width cho nội dung bên trong để nó cân đối với phần trên */
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+
+/* =================== CSS CHO FOOTER CHÍNH =================== */
+footer {
+    background-color: #333;
+    color: #f0f0f0;
+    padding: 20px 0;
+    margin-top: 0; /* Đảm bảo không có khoảng trống với thanh thông báo */
+}
+.footer-content {
+    max-width: 1250px;
+    margin: auto;
+    padding: 0 15px;
+}
+.footer-content h4 {
+    color: #ffc107;
+    border-bottom: 1px solid #555;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+.team-info ul {
+    list-style: none;
+    padding: 0;
+    font-size: 0.9em;
+}
+.copyright {
+    margin-top: 15px;
+    border-top: 1px solid #555;
+    padding-top: 10px;
+    font-size: 0.85em;
+}
+
+.product-card .card-img-top {
+    height: 150px; /* KHÔI PHỤC KÍCH THƯỚC CHIỀU CAO CHUẨN */
+    object-fit: contain; /* Đảm bảo ảnh hiển thị đầy đủ, không bị crop */
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+/* TRONG style.css: Sửa khối Style cho Product Card */
+
+.product-card .card-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    /* CĂN CHỈNH NỘI DUNG TỪ DƯỚI LÊN ĐỂ NÚT LUÔN Ở CUỐI */
+    justify-content: flex-end; 
+    /* BỎ CỐ ĐỊNH CHIỀU CAO TẠM THỜI */
+}
+
+.product-card .card-title {
+    font-size: 0.9em;
+    font-weight: 600;
+    /* CỐ ĐỊNH CHIỀU CAO TÊN SẢN PHẨM (Ví dụ: đủ cho 2 dòng) */
+    height: 38px; 
+    overflow: hidden; /* Ẩn phần tên nếu quá dài */
+    margin-bottom: 5px;
+    line-height: 1.3;
+    color: var(--text-dark);
+}
+
+.product-card .card-price {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--longchau-red); /* Màu giá nổi bật */
+    /* Đảm bảo khối này có khoảng cách ổn định */
+    margin-top: 5px; 
+    margin-bottom: 10px; 
+}
+/* =================== STYLE CHO FORM ĐĂNG NHẬP (Lấy cảm hứng từ ảnh 2) =================== */
+
+.login-form-container {
+    max-width: 400px; /* Giới hạn chiều rộng của form */
+    margin: 60px auto 40px auto; /* Căn giữa và tạo khoảng cách trên dưới */
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Bóng đổ mềm mại hơn */
+    text-align: center;
+}
+
+.login-form-container h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--longchau-red); /* Màu đỏ nổi bật cho tiêu đề */
+    margin-bottom: 25px;
+    text-transform: uppercase; /* Chuyển thành chữ hoa */
+}
+
+.login-form-group {
+    margin-bottom: 20px;
+    text-align: left; /* Căn chỉnh label và input sang trái */
+}
+
+.login-form-group label {
+    display: block; /* Đảm bảo label chiếm một dòng riêng */
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+.login-form-group .form-control {
+    width: 100%;
+    padding: 12px 15px; /* Tăng padding để input cao hơn */
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border-color 0.2s;
+}
+
+.login-form-group .form-control:focus {
+    border-color: var(--longchau-blue-dark); /* Màu viền khi focus */
+    box-shadow: 0 0 0 0.2rem rgba(51, 204, 204, 0.25);
+    outline: none;
+}
+
+.btn-login-submit {
+    width: 100%;
+    padding: 12px 0; /* Tăng padding để nút cao hơn */
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    background-color: var(--longchau-red); /* Màu đỏ nổi bật cho nút */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-login-submit:hover {
+    background-color: #e60000; /* Màu đỏ đậm hơn khi hover */
+}
+
+.register-link {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.register-link a {
+    color: var(--longchau-blue-dark); /* Màu xanh cho link đăng ký */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+/* Trong style.css */
+.bg-tmn-red {
+    background-color: var(--longchau-red) !important;
+    border-color: var(--longchau-red) !important;
+}
+
+.text-tmn-red {
+    color: var(--longchau-red) !important; 
+}
+
+.main-header .header-top-bar {
+    /* Màu xanh đậm hơn một chút (hoặc sử dụng màu đậm cố định) */
+    background-color: rgba(0, 0, 0.1, 0); 
+    padding: 1px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    /* Đảm bảo chữ xếp ngang hàng */
+    height: auto !important; 
+}
+
+/* Đảm bảo liên kết top bar luôn xếp ngang và gọn gàng */
+.header-top-bar .top-link {
+    white-space: nowrap;
+    font-size: 1em;
+}
+
+/* === BỔ SUNG GHI ĐÈ CUỐI CÙNG: TỐI ƯU HÓA KHI NGƯỜI DÙNG ĐÃ ĐĂNG NHẬP === */
+
+/* 1. Giảm kích thước và padding/margin của các liên kết mới (Xin chào, Tài khoản, Đơn hàng, Đăng xuất) */
+.user-actions a.btn-login-style, 
+.user-actions span.btn-login-style {
+    /* Giảm cỡ chữ xuống mức tối đa có thể chấp nhận được */
+    font-size: 1em !important; 
+    /* Giảm padding ngang tối đa */
+    padding: 0 2px !important; 
+    /* Giảm margin giữa các mục */
+    margin: 0 0.2px !important; 
+    
+    /* Buộc các icon đứng sát chữ (Giống như đã làm với ĐK/ĐN) */
+    flex-direction: row !important;
+    white-space: nowrap !important;
+    align-items: center !important;
+}
+
+/* 2. Điều chỉnh Icon bên trong các liên kết này */
+.user-actions a.btn-login-style i,
+.user-actions span.btn-login-style i {
+    /* Giữ icon nhỏ gọn và có khoảng cách hợp lý */
+    font-size: 1em !important; 
+    margin-right: 0.2px !important; 
+    margin-bottom: 0 !important;
+}
+
+/* 3. Tối ưu hóa khối "Xin chào, nguyentam" */
+.user-actions span.top-btn-login-style {
+    /* Khối "Xin chào, nguyentam" cần được ưu tiên hiển thị */
+    font-weight: 400 !important;
+    color: #FFFF66 !important; /* Đặt màu vàng nổi bật nếu muốn */
+}
