@@ -176,7 +176,7 @@ public List<model.Product> getAllProducts() {
 
 // Hàm 2: Thêm Sản phẩm mới (CREATE)
 public void addProduct(model.Product p) throws SQLException, ClassNotFoundException {
-    String sql = "INSERT INTO sanpham (MaSP, TenSP, Gia, HinhAnh, DonVi, ThuongHieu, XuatXu, MoTa, HuongDan, SoLuongTon, MaDM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO sanpham (MaSP, TenSP, Gia, HinhAnh, DonVi, ThuongHieu, XuatXu, MoTa, HuongDanSuDung, SoLuongTon, MaDM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     try (Connection con = DB.getCon(); PreparedStatement ps = con.prepareStatement(sql)) {
         ps.setString(1, p.getMaSP());
@@ -196,7 +196,7 @@ public void addProduct(model.Product p) throws SQLException, ClassNotFoundExcept
 
 // Hàm 3: Cập nhật Sản phẩm (UPDATE)
 public void updateProduct(model.Product p) throws SQLException, ClassNotFoundException {
-    String sql = "UPDATE sanpham SET TenSP=?, Gia=?, HinhAnh=?, DonVi=?, ThuongHieu=?, XuatXu=?, MoTa=?, HuongDan=?, SoLuongTon=?, MaDM=? WHERE MaSP=?";
+    String sql = "UPDATE sanpham SET TenSP=?, Gia=?, HinhAnh=?, DonVi=?, ThuongHieu=?, XuatXu=?, MoTa=?, HuongDanSuDung=?, SoLuongTon=?, MaDM=? WHERE MaSP=?";
     
     try (Connection con = DB.getCon(); PreparedStatement ps = con.prepareStatement(sql)) {
         ps.setString(1, p.getTenSP());
@@ -224,5 +224,26 @@ public boolean deleteProduct(String maSp) {
         e.printStackTrace();
         return false;
     }
+}
+
+// Hàm 5: Lấy sản phẩm theo nhà cung cấp (dựa trên lịch sử nhập hàng)
+public List<Product> getProductsBySupplier(int maNCC) {
+    List<Product> list = new ArrayList<>();
+    // Lấy các sản phẩm đã từng được nhập từ nhà cung cấp này
+    String sql = "SELECT DISTINCT sp.* FROM sanpham sp "
+               + "INNER JOIN chitietphieunhap ct ON sp.MaSP = ct.MaSP "
+               + "INNER JOIN phieunhap pn ON ct.MaPN = pn.MaPN "
+               + "WHERE pn.MaNCC = ? "
+               + "ORDER BY sp.MaSP DESC";
+    try (Connection con = DB.getCon(); PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, maNCC);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            list.add(mapProduct(rs));
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
 }
 }
