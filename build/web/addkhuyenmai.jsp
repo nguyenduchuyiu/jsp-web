@@ -8,19 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">  
-    
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">  
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">  
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin.css">  
 </head>
 
 <body class="admin-page">
-    <%@include file="header_admin.jspf" %>
+    
+    <%-- Đảm bảo bạn include header_admin.jspf hoặc chung.jspf --%>
+    <%@include file="chung.jspf" %> 
     
     <div class="container page-content mt-5 mb-5">
         <div class="row justify-content-center">
+        
             <div class="col-md-7">
                 <h2>📝 THÊM CHƯƠNG TRÌNH KHUYẾN MÃI MỚI</h2>
                 <hr>
@@ -50,6 +50,29 @@
                         <div class="col-md-6 form-group mb-4">
                             <label>Ngày Kết Thúc (*):</label>
                             <input type="date" name="ngayKetThuc" class="form-control" required>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group mb-3">
+                        <label>Loại Khuyến Mãi (*):</label>
+                        <select name="loaiKM" class="form-select" required>
+                            <%-- Dựa trên ENUM('GIAM_GIA', 'TANG_KEM') trong DB --%>
+                            <option value="GIAM_GIA">Giảm giá (%)</option>
+                            <option value="TANG_KEM">Tặng kèm (Không giảm giá tiền)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-3">
+                            <label>Điều Kiện Tối Thiểu (VND, *):</label>
+                            <%-- Trường DieuKienMin (decimal(10,0)) --%>
+                            <input type="number" name="dieuKienMin" class="form-control" min="0" value="0" required>
+                        </div>
+                        <div class="col-md-6 form-group mb-3">
+                            <label>Phần Trăm Giảm (*):</label>
+                            <%-- Trường PhanTramGiam (int(11)) --%>
+                            <input type="number" name="phanTramGiam" class="form-control" min="0" max="100" value="0" required>
                         </div>
                     </div>
                     

@@ -3,7 +3,6 @@
 <%@taglib prefix="c" uri="jakarta.tags.core" %>
 <%@taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
-<html>
 <head>
     <title>Quản Lý Nhập Hàng</title>
     <meta charset="UTF-8">
@@ -18,6 +17,8 @@
 <body class="admin-page">
     
     <%@include file="chung.jspf" %>
+    <%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
+
     
     <div class="container-fluid page-content my-5" style="max-width: 1250px;">
         <h2 class="mb-4 text-primary"><i class="fa fa-truck-loading"></i> QUẢN LÝ NHẬP HÀNG</h2>
@@ -28,7 +29,7 @@
 
         <ul class="nav nav-tabs tabs-nh" id="nhapHangTabs" role="tablist">
             <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" data-bs-target="#qlDonDatHang">1. Lập Hóa Đơn</a></li>
-            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" data-bs-target="#qlThanhToan">2. Thanh Toán cho NCC</a></li>
+            
         </ul>
 
         <div class="tab-content border p-4 bg-white shadow-sm">
@@ -36,73 +37,97 @@
             <%-- TAB 1: QUẢN LÝ ĐƠN ĐẶT HÀNG--%>
             <div class="tab-pane fade show active" id="qlDonDatHang" role="tabpanel">
                 
+
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4>Đơn đặt hàng chờ xử lý</h4>
+                    <h4>Đơn đặt hàng từ NCC</h4>
                     <div>
-                        <a href="nhapkho_manage.jsp" class="btn btn-info me-2"><i class="fa fa-box"></i> QL Nhập Kho</a> 
-                        <a href="${pageContext.request.contextPath}/admin/nhaphangadd" class="btn btn-primary"><i class="fa fa-plus"></i> Lập Phiếu Nhập Mới</a>
+                        
+            
+            <a href="${pageContext.request.contextPath}/admin/nhaphangadd" class="btn btn-primary"><i class="fa fa-plus"></i> Lập Phiếu Nhập Mới</a>
                     </div>
                 </div>
 
                 <p>Nơi lập phiếu yêu cầu mua hàng và tạo đơn đặt hàng chính thức gửi NCC.</p>
-                
+            
+    
                 <table class="table table-bordered admin-table">
                     <thead class="table-dark">
                         <tr><th>Mã PN</th><th>Ngày Lập</th><th>Nhà Cung Cấp</th><th>Tổng Tiền</th><th>Thao Tác</th></tr>
                     </thead>
-                    <tbody>
+      
+              <tbody>
                         <c:choose>
                             <c:when test="${not empty phieuNhapList}">
-                                <c:forEach var="pn" items="${phieuNhapList}">
+                               
+ <c:forEach var="pn" items="${phieuNhapList}">
                                     <tr>
                                         <td><strong>${pn.maPN}</strong></td>
-                                        <td><fmt:formatDate value="${pn.ngayLap}" pattern="dd/MM/yyyy HH:mm" /></td>
+                     
+                   <td><fmt:formatDate value="${pn.ngayLap}" pattern="dd/MM/yyyy HH:mm" /></td>
                                         <td>${pn.tenNCC}</td>
-                                        <td class="text-end">${pn.tongTienVND}</td>
+                                     
+   <td class="text-end">${pn.tongTienVND}</td>
                                         <td>
+                                            <%-- ĐÃ SỬA: Thay thế Nút Xem Chi Tiết bằng Nút Xuất PDF / Xem chi tiết --%>
                                             <a href="${pageContext.request.contextPath}/admin/viewphieunhap?maPN=${pn.maPN}" 
-                                               class="btn btn-sm btn-info me-1" 
-                                               title="Xem chi tiết">
-                                               <i class="fa fa-eye"></i>
+                                               class="btn btn-sm btn-secondary me-1" 
+                                               title="Xuất File PDF"
+                                               onclick="return printPhieuNhap('${pn.maPN}');">
+                                               <i class="fa fa-file-pdf"></i>
                                             </a>
-                                            <a href="${pageContext.request.contextPath}/admin/deletephieunhap?maPN=${pn.maPN}" 
+                                            <a href="${pageContext.request.contextPath}/admin/viewphieunhap?maPN=${pn.maPN}" 
+          
+                                     class="btn btn-sm btn-info me-1" 
+                                               title="Xem chi tiết">
+          
+                                     <i class="fa fa-eye"></i>
+                                            </a>
+                 
+                           <a href="${pageContext.request.contextPath}/admin/deletephieunhap?maPN=${pn.maPN}" 
                                                class="btn btn-sm btn-danger" 
-                                               title="Xóa phiếu nhập" 
+                     
+                          title="Xóa phiếu nhập" 
                                                onclick="return confirm('Bạn có chắc muốn xóa phiếu nhập ${pn.maPN}?');">❌</a>
-                                        </td>
+                
+                        </td>
                                     </tr>
                                 </c:forEach>
-                            </c:when>
+        
+                    </c:when>
                             <c:otherwise>
                                 <tr>
-                                    <td colspan="5" class="text-center text-muted">Chưa có phiếu nhập nào</td>
+                    
+                <td colspan="5" class="text-center text-muted">Chưa có phiếu nhập nào</td>
                                 </tr>
                             </c:otherwise>
-                        </c:choose>
+                 
+       </c:choose>
                     </tbody>
                 </table>
             </div>
-
-            <%-- TAB 3: QUẢN LÝ THANH TOÁN CÔNG NỢ --%>
-            <div class="tab-pane fade" id="qlThanhToan" role="tabpanel">
-                <h4>Công nợ cần thanh toán</h4>
-                <p>Quản lý quy trình đối chiếu hóa đơn và thực hiện thanh toán cho NCC.</p>
-            </div>
-            
         </div>
     </div>
     
     <%@include file="footer.jspf" %>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Tự động ẩn thông báo sau 5 giây
+   
+     // Tự động ẩn thông báo sau 5 giây
         setTimeout(function() {
             var alerts = document.querySelectorAll('.alert');
-            alerts.forEach(function(alert) {
+alerts.forEach(function(alert) {
                 var bsAlert = new bootstrap.Alert(alert);
                 bsAlert.close();
             });
-        }, 5000);
+}, 5000);
+
+        // HÀM XUẤT PDF (Sử dụng window.open và window.print)
+        function printPhieuNhap(maPN) {
+            // Mở trang chi tiết phiếu nhập trong cửa sổ mới, thêm cờ 'print'
+            const printWindow = window.open('${pageContext.request.contextPath}/admin/viewphieunhap?maPN=' + maPN + '&print=true', '_blank');
+            // Cần chờ cửa sổ mở và tải xong nội dung (sẽ xử lý logic in trong JSP đó)
+            return false; // Ngăn liên kết mặc định chuyển hướng
+        }
     </script>
 </body>
 </html>

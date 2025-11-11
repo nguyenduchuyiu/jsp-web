@@ -13,8 +13,11 @@ public class KhuyenMaiDAO {
         km.setMaKM(rs.getInt("MaKM"));
         km.setTenKM(rs.getString("TenKM"));
         km.setMoTa(rs.getString("MoTa"));
+        km.setLoaiKM(rs.getString("LoaiKM"));
         km.setNgayBatDau(rs.getDate("NgayBatDau"));
         km.setNgayKetThuc(rs.getDate("NgayKetThuc"));
+        km.setPhanTramGiam(rs.getInt("PhanTramGiam"));
+        km.setDieuKienMin(rs.getBigDecimal("DieuKienMin"));
         return km;
     }
 
@@ -59,4 +62,43 @@ public class KhuyenMaiDAO {
             return false;
         }
     }
+    
+    // 4. Lấy danh sách TẤT CẢ Khuyến Mãi đang còn hiệu lực
+
+public List<KhuyenMai> getActiveKhuyenMai() {
+    List<KhuyenMai> list = new ArrayList<>();
+    
+    // SỬA: Lọc theo NgayBatDau <= CURDATE() VÀ NgayKetThuc >= CURDATE()
+    String sql = "SELECT * FROM khuyenmai " +
+                 "WHERE NgayBatDau <= CURDATE() AND NgayKetThuc >= CURDATE() " + 
+                 "ORDER BY DieuKienMin ASC"; 
+
+    try (Connection con = DB.getCon(); 
+         Statement stmt = con.createStatement(); 
+         ResultSet rs = stmt.executeQuery(sql)) {
+        
+        while (rs.next()) {
+            list.add(mapKhuyenMai(rs));
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
+// 5. Lấy Chi tiết Khuyến Mãi theo MaKM
+public KhuyenMai getKhuyenMaiById(int maKM) {
+    KhuyenMai km = null;
+    String sql = "SELECT * FROM khuyenmai WHERE MaKM = ?";
+    
+    try (Connection con = DB.getCon(); PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, maKM);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            km = mapKhuyenMai(rs); // Sử dụng hàm map đã có
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return km;
+}
 }

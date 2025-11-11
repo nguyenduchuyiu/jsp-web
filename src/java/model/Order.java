@@ -18,6 +18,16 @@ public class Order {
     private String tenNguoiNhan;
     private String sdtNguoiNhan;
     
+    private int maKM;
+private java.math.BigDecimal giamGia = java.math.BigDecimal.ZERO;
+
+
+public int getMaKM() { return maKM; }
+public void setMaKM(int maKM) { this.maKM = maKM; }
+
+public java.math.BigDecimal getGiamGia() { return giamGia; }
+public void setGiamGia(java.math.BigDecimal giamGia) { this.giamGia = giamGia; }
+    
     // Getters and Setters
     public int getMaDH() { return maDH; }
     public void setMaDH(int maDH) { this.maDH = maDH; }

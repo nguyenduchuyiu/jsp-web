@@ -3,17 +3,16 @@
 <%@taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Quản Lý Đơn Hàng (ADMIN)</title>
-    <%-- LƯU Ý: KHÔNG INCLUDE CSS/Bootstrap Ở ĐÂY, VÌ CHUNG.JSPF ĐÃ LÀM THAY (THÔNG QUA header_admin.jspf) --%>
-    <style>
-        .admin-table img { max-width: 50px; height: auto; }
-        .status-pill-ChoThanhToan { background-color: #ffc107; color: #333; }
-        .status-pill-DangGiao { background-color: #17a2b8; color: white; }
-        .status-pill-DaGiao { background-color: #28a745; color: white; }
-        .status-pill-DaHuy { background-color: #dc3545; color: white; }
-    </style>
-</head>
+    <head>
+        <title>Quản Lý Đơn Hàng (Admin)</title>
+        <link rel="stylesheet" href="<%= request.getContextPath()%>/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<%= request.getContextPath()%>/css/admin.css">
+        <link rel="stylesheet" href="<%= request.getContextPath()%>/css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    </head>
 <body class="admin-page">
     
     <%-- 1. BAO GỒM HEADER VÀ CÁC THẺ CSS/JS CẦN THIẾT --%>

@@ -50,8 +50,8 @@
                             </ul>
                         </div>
                         <a href="${pageContext.request.contextPath}/admin/live" class="btn btn-warning"><i class="fa fa-chart-bar"></i> QL Nhập Hàng</a>
-                        <a href="${pageContext.request.contextPath}/admin/chat" class="btn btn-warning"><i class="fa fa-chart-bar"></i> QL Liên Hệ</a>                       
-                        <a href="${pageContext.request.contextPath}/admin/reports" class="btn btn-warning"><i class="fa fa-chart-bar"></i> Báo Cáo Thống Kê</a>
+                        <a href="${pageContext.request.contextPath}/admin/chat" class="btn btn-warning"><i class="fa fa-chart-bar"></i> QL Liên Hệ</a>         
+                        <a href="admin/reports" class="btn btn-warning"><i class="fa fa-chart-bar"></i> Báo Cáo Thống Kê</a>
                         <a href="logout" class="btn btn-danger"><i class="fa fa-sign-out-alt"></i> Đăng Xuất</a>
                     </div>
         </div>

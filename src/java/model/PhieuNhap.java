@@ -10,7 +10,6 @@ public class PhieuNhap {
     private String tenNCC; // Thuộc tính bổ sung
     private Timestamp ngayLap;
     private BigDecimal tongTien;
-    private String trangThai; 
     private int maNguoiLap;
     private String ghiChu;
 
@@ -33,8 +32,6 @@ public class PhieuNhap {
     public BigDecimal getTongTien() { return tongTien; }
     public void setTongTien(BigDecimal tongTien) { this.tongTien = tongTien; }
 
-    public String getTrangThai() { return trangThai; }
-    public void setTrangThai(String trangThai) { this.trangThai = trangThai; }
 
     public int getMaNguoiLap() { return maNguoiLap; }
     public void setMaNguoiLap(int maNguoiLap) { this.maNguoiLap = maNguoiLap; }

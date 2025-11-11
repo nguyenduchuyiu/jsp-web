@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2025 at 11:02 AM
+-- Generation Time: Nov 10, 2025 at 09:22 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,20 +34,39 @@ CREATE TABLE `chitietdonhang` (
   `SDTNguoiNhan` varchar(20) NOT NULL,
   `NgayDatHang` datetime DEFAULT current_timestamp(),
   `TongTien` decimal(10,0) NOT NULL,
+  `TrangThai` varchar(20) NOT NULL DEFAULT 'ChoThanhToan' CHECK (`TrangThai` in ('ChoThanhToan','DangGiao','DaGiao','DaHuy')),
   `DiaChiGiaoHang` varchar(255) NOT NULL,
   `PhuongThucThanhToan` varchar(50) DEFAULT 'COD',
-  `GhiChu` text DEFAULT NULL
+  `GhiChu` text DEFAULT NULL,
+  `MaKM` int(11) DEFAULT NULL,
+  `GiamGia` decimal(10,0) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `chitietdonhang`
 --
 
-INSERT INTO `chitietdonhang` (`MaDH`, `MaND`, `TenNguoiNhan`, `SDTNguoiNhan`, `NgayDatHang`, `TongTien`, `DiaChiGiaoHang`, `PhuongThucThanhToan`, `GhiChu`) VALUES
-(1, 2, 'Nguyễn Thị Mỹ Tâm', '0987654321', '2025-11-03 13:45:10', 48000, 'Số 10, Đường Phan Văn Trị, TP.HCM', 'COD', ''),
-(15, 2, 'Nguyễn Thị Mỹ Tâm', '0987654321', '2025-11-04 14:21:03', 180000, 'Số 10, Đường Phan Văn Trị, TP.HCM', 'COD', ''),
-(16, 2, 'Nguyễn Thị Mỹ Tâm', '0987654321', '2025-11-04 21:18:27', 37000, 'Số 10, Đường Phan Văn Trị, TP.HCM', 'COD', ''),
-(17, 2, 'Nguyễn Thị Mỹ Tâm', '0987654321', '2025-11-04 22:01:15', 42000, 'Số 10, Đường Phan Văn Trị, TP.HCM', 'ChuyenKhoan', '');
+INSERT INTO `chitietdonhang` (`MaDH`, `MaND`, `TenNguoiNhan`, `SDTNguoiNhan`, `NgayDatHang`, `TongTien`, `TrangThai`, `DiaChiGiaoHang`, `PhuongThucThanhToan`, `GhiChu`, `MaKM`, `GiamGia`) VALUES
+(19, 2, 'Nguyễn Thị Mỹ Tâm', '0987654321', '2025-11-10 14:41:31', 126000, 'DaGiao', 'Số 10, Đường Phan Văn Trị, TP.HCM', 'COD', '', NULL, 0);
+
+--
+-- Triggers `chitietdonhang`
+--
+DELIMITER $$
+CREATE TRIGGER `set_chitiet_default_trangthai` BEFORE INSERT ON `chitietdonhang` FOR EACH ROW BEGIN
+    -- Logic: Nếu PhuongThucThanhToan là 'COD'
+    IF NEW.PhuongThucThanhToan = 'COD' THEN
+        SET NEW.TrangThai = 'DangGiao';
+    -- Logic: Nếu PhuongThucThanhToan là 'ChuyenKhoan'
+    ELSEIF NEW.PhuongThucThanhToan = 'ChuyenKhoan' THEN
+        SET NEW.TrangThai = 'ChoThanhToan';
+    -- Logic: Trường hợp khác (hoặc chưa xác định), đặt mặc định là 'ChoThanhToan'
+    ELSE
+        SET NEW.TrangThai = 'ChoThanhToan';
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -67,9 +86,9 @@ CREATE TABLE `chitietgiohang` (
 --
 
 INSERT INTO `chitietgiohang` (`MaCTGH`, `MaGH`, `MaSP`, `SoLuong`) VALUES
-(1, 1, 'BCC48', 2),
 (21, 1, 'TL170', 1),
-(23, 1, 'MXH700', 1);
+(23, 1, 'MXH700', 1),
+(27, 1, 'TNC500', 1);
 
 -- --------------------------------------------------------
 
@@ -78,16 +97,20 @@ INSERT INTO `chitietgiohang` (`MaCTGH`, `MaGH`, `MaSP`, `SoLuong`) VALUES
 --
 
 CREATE TABLE `chitietphieunhap` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `MaCTPN` varchar(10) DEFAULT NULL,
+  `ID` int(11) NOT NULL,
   `MaPN` varchar(10) NOT NULL,
   `MaSP` varchar(20) NOT NULL,
   `SoLuong` int(11) NOT NULL,
-  `GiaNhap` decimal(18,2) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `FK_MaPN` (`MaPN`),
-  KEY `FK_MaSP` (`MaSP`)
+  `GiaNhap` decimal(18,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `chitietphieunhap`
+--
+
+INSERT INTO `chitietphieunhap` (`ID`, `MaPN`, `MaSP`, `SoLuong`, `GiaNhap`) VALUES
+(1, 'PN0001', 'TNC500', 1, 400000.00),
+(2, 'PN0002', 'MDDH550', 1, 500000.00);
 
 -- --------------------------------------------------------
 
@@ -130,10 +153,7 @@ CREATE TABLE `donhang` (
 --
 
 INSERT INTO `donhang` (`MaCTDH`, `MaDH`, `MaSP`, `SoLuong`, `GiaBan`) VALUES
-(1, 1, 'BG18', 1, 18000),
-(15, 15, 'MSDD150', 1, 150000),
-(16, 16, 'MDTD7', 1, 7000),
-(17, 17, 'CMS12', 1, 12000);
+(19, 19, 'BCC48', 2, 48000);
 
 -- --------------------------------------------------------
 
@@ -163,17 +183,21 @@ CREATE TABLE `khuyenmai` (
   `MaKM` int(11) NOT NULL,
   `TenKM` varchar(255) NOT NULL,
   `MoTa` text DEFAULT NULL,
+  `LoaiKM` enum('GIAM_GIA','TANG_KEM') NOT NULL DEFAULT 'GIAM_GIA',
   `NgayBatDau` date NOT NULL,
-  `NgayKetThuc` date NOT NULL
+  `NgayKetThuc` date NOT NULL,
+  `MaNguoiLap` int(11) DEFAULT NULL,
+  `DieuKienMin` decimal(10,0) DEFAULT 0,
+  `PhanTramGiam` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `khuyenmai`
 --
 
-INSERT INTO `khuyenmai` (`MaKM`, `TenKM`, `MoTa`, `NgayBatDau`, `NgayKetThuc`) VALUES
-(1, 'Ưu Đãi Giáng Sinh An Lành', 'Giảm giá 20% cho tất cả các sản phẩm. Áp dụng cho đơn hàng có giá trị trên 500.000 VNĐ.', '2025-12-15', '2025-12-25'),
-(2, 'Khai Xuân Rước Lộc 2026', 'Tặng kèm bộ sản phẩm chăm sóc sức khỏe trị giá 150.000 VNĐ cho đơn hàng từ 800.000 VND', '2025-12-30', '2026-01-05');
+INSERT INTO `khuyenmai` (`MaKM`, `TenKM`, `MoTa`, `LoaiKM`, `NgayBatDau`, `NgayKetThuc`, `MaNguoiLap`, `DieuKienMin`, `PhanTramGiam`) VALUES
+(1, 'Ưu Đãi Giáng Sinh An Lành', 'Giảm giá 20% cho tất cả các sản phẩm. Áp dụng cho đơn hàng có giá trị trên 500.000 VNĐ.', 'GIAM_GIA', '2025-11-01', '2025-12-25', 1, 500000, 20),
+(2, 'Khai Xuân Rước Lộc 2026', 'Tặng kèm bộ sản phẩm chăm sóc sức khỏe trị giá 150.000 VNĐ cho đơn hàng từ 800.000 VND', 'TANG_KEM', '2025-12-30', '2026-01-05', 1, 800000, 0);
 
 -- --------------------------------------------------------
 
@@ -286,18 +310,22 @@ INSERT INTO `nhacungcap` (`MaNCC`, `TenNCC`, `DiaChi`, `SDT`, `Email`, `XuatXu`)
 --
 
 CREATE TABLE `phieunhap` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID` int(11) NOT NULL,
   `MaPN` varchar(10) DEFAULT NULL,
   `MaNCC` int(11) NOT NULL,
   `NgayLap` datetime NOT NULL,
   `TongTien` decimal(18,2) DEFAULT NULL,
   `MaNguoiLap` int(11) NOT NULL,
-  `GhiChu` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `MaPN` (`MaPN`),
-  KEY `MaNCC` (`MaNCC`),
-  KEY `MaNguoiLap` (`MaNguoiLap`)
+  `GhiChu` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `phieunhap`
+--
+
+INSERT INTO `phieunhap` (`ID`, `MaPN`, `MaNCC`, `NgayLap`, `TongTien`, `MaNguoiLap`, `GhiChu`) VALUES
+(1, 'PN0001', 28, '2025-11-10 09:22:50', 400000.00, 1, 'Cho thêm 10 tấm thiệp cảm ơn'),
+(2, 'PN0002', 23, '2025-11-10 11:32:57', 500000.00, 1, '');
 
 -- --------------------------------------------------------
 
@@ -420,8 +448,11 @@ ALTER TABLE `chitietgiohang`
 
 --
 -- Indexes for table `chitietphieunhap`
--- (Indexes are already defined in CREATE TABLE)
 --
+ALTER TABLE `chitietphieunhap`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `FK_MaPN` (`MaPN`),
+  ADD KEY `FK_MaSP` (`MaSP`);
 
 --
 -- Indexes for table `danhmuc`
@@ -449,7 +480,8 @@ ALTER TABLE `giohang`
 -- Indexes for table `khuyenmai`
 --
 ALTER TABLE `khuyenmai`
-  ADD PRIMARY KEY (`MaKM`);
+  ADD PRIMARY KEY (`MaKM`),
+  ADD KEY `FK_KhuyenMai_NguoiLap` (`MaNguoiLap`);
 
 --
 -- Indexes for table `lienhe`
@@ -475,8 +507,12 @@ ALTER TABLE `nhacungcap`
 
 --
 -- Indexes for table `phieunhap`
--- (Indexes are already defined in CREATE TABLE)
 --
+ALTER TABLE `phieunhap`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `MaPN` (`MaPN`),
+  ADD KEY `MaNCC` (`MaNCC`),
+  ADD KEY `MaNguoiLap` (`MaNguoiLap`);
 
 --
 -- Indexes for table `sanpham`
@@ -508,19 +544,19 @@ ALTER TABLE `trochuyen`
 -- AUTO_INCREMENT for table `chitietdonhang`
 --
 ALTER TABLE `chitietdonhang`
-  MODIFY `MaDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `MaDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `chitietgiohang`
 --
 ALTER TABLE `chitietgiohang`
-  MODIFY `MaCTGH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `MaCTGH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `danhmuc`
@@ -532,7 +568,7 @@ ALTER TABLE `danhmuc`
 -- AUTO_INCREMENT for table `donhang`
 --
 ALTER TABLE `donhang`
-  MODIFY `MaCTDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `MaCTDH` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `giohang`
@@ -568,7 +604,7 @@ ALTER TABLE `nhacungcap`
 -- AUTO_INCREMENT for table `phieunhap`
 --
 ALTER TABLE `phieunhap`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tinnhan`
@@ -618,6 +654,12 @@ ALTER TABLE `donhang`
 --
 ALTER TABLE `giohang`
   ADD CONSTRAINT `giohang_ibfk_1` FOREIGN KEY (`MaND`) REFERENCES `nguoidung` (`MaND`);
+
+--
+-- Constraints for table `khuyenmai`
+--
+ALTER TABLE `khuyenmai`
+  ADD CONSTRAINT `FK_KhuyenMai_NguoiLap` FOREIGN KEY (`MaNguoiLap`) REFERENCES `nguoidung` (`MaND`);
 
 --
 -- Constraints for table `lienhe`

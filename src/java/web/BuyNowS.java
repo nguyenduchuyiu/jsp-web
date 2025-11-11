@@ -39,8 +39,10 @@ public class BuyNowS extends HttpServlet {
             // 1. TÌM HOẶC TẠO GIỎ HÀNG
             int maGH = cartDAO.findOrCreateCart(user.getMaND());
             
+            // NHUNG
             // 2. THÊM SẢN PHẨM VÀO CHI TIẾT GIỎ HÀNG VÀ LẤY MACTGH (Giả định hàm trả về int)
-            int maCtghBaru = cartDAO.addItem(maGH, maSp, soLuong); 
+            int maCtghBaru = cartDAO.setItemQuantity(maGH, maSp, soLuong); 
+            // END
             
             // 3. CHUYỂN HƯỚNG TRỰC TIẾP ĐẾN XỬ LÝ THANH TOÁN (confirmcheckout)
             if (maCtghBaru > 0) {

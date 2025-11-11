@@ -9,7 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
-@WebServlet("/admin/live") 
+@WebServlet("/admin/live")  
 public class NhapHangS extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

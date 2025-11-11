@@ -112,3 +112,18 @@ body.admin-page .page-content {
         .tabs-nh .nav-link.active {
             background-color: #3f51b5;
             color: white !important;}
+        
+         .admin-table img { max-width: 50px; height: auto; }
+        .status-pill-ChoThanhToan { background-color: #ffc107; color: #333; }
+        .status-pill-DangGiao { background-color: #17a2b8; color: white; }
+        .status-pill-DaGiao { background-color: #28a745; color: white; }
+        .status-pill-DaHuy { background-color: #dc3545; color: white; }
+        .report-form { padding: 20px; border-radius: 8px; background-color: #f8f9fa; }
+        .chart-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; }
+            .card { border: none !important; box-shadow: none !important; }
+        }

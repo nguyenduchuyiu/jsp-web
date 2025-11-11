@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import java.util.ArrayList; // Thêm import này
+import dao.KhuyenMaiDAO;
 
 @WebServlet("/checkout")
 public class CheckoutS extends HttpServlet {
@@ -75,6 +76,9 @@ protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             // Phí vận chuyển (Giả định 30.000 VNĐ)
             BigDecimal shippingFee = new BigDecimal("30000");
             BigDecimal totalFinal = tongHang.add(shippingFee);
+            
+            KhuyenMaiDAO kmDAO = new KhuyenMaiDAO();
+            req.setAttribute("khuyenMaiList", kmDAO.getActiveKhuyenMai());   
 
             // 5. LƯU THÔNG TIN ĐÃ ĐƯỢC LỌC VÀO REQUEST/SESSION
             // Lưu orderItemsSession và totalFinalSession vào Session cho PlaceOrderS (nếu cần)

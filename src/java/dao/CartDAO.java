@@ -201,7 +201,56 @@ public List<model.CartItem> getSelectedCartItems(List<String> maCtghList) {
     }
     return items;
 }
+/**
+ * 7. Ghi đè số lượng sản phẩm trong chi tiết giỏ hàng (Dùng cho BuyNow).
+ * Nếu sản phẩm chưa có, nó sẽ được thêm mới.
+ */
+public int setItemQuantity(int maGH, String maSP, int newSoLuong) throws SQLException, ClassNotFoundException {
+    
+    // 7a. Kiểm tra sản phẩm đã có trong chi tiết giỏ hàng chưa
+    String checkItemSql = "SELECT MaCTGH FROM chitietgiohang WHERE MaGH = ? AND MaSP = ?";
+    int currentMaCtgh = -1;
+    
+    try (Connection con = DB.getCon(); PreparedStatement ps = con.prepareStatement(checkItemSql)) {
+        ps.setInt(1, maGH);
+        ps.setString(2, maSP);
+        ResultSet rs = ps.executeQuery();
 
+        if (rs.next()) {
+            // Đã có: Cập nhật số lượng (GHI ĐÈ)
+            currentMaCtgh = rs.getInt("MaCTGH");
+            
+            String updateSql = "UPDATE chitietgiohang SET SoLuong = ? WHERE MaCTGH = ?";
+            try (PreparedStatement updatePs = con.prepareStatement(updateSql)) {
+                updatePs.setInt(1, newSoLuong); // Dùng newSoLuong thay vì cộng dồn
+                updatePs.setInt(2, currentMaCtgh);
+                updatePs.executeUpdate();
+            }
+            return currentMaCtgh; // TRẢ VỀ MACTGH CŨ
+            
+        } else {
+            // Chưa có: Thêm mới (Và lấy MaCTGH mới)
+            String insertItemSql = "INSERT INTO chitietgiohang (MaGH, MaSP, SoLuong) VALUES (?, ?, ?)";
+            try (Connection conInsert = DB.getCon(); 
+                 PreparedStatement insertPs = conInsert.prepareStatement(insertItemSql, Statement.RETURN_GENERATED_KEYS)) {
+                
+                insertPs.setInt(1, maGH);
+                insertPs.setString(2, maSP);
+                insertPs.setInt(3, newSoLuong); // Dùng newSoLuong
+                int affectedRows = insertPs.executeUpdate();
+
+                if (affectedRows > 0) {
+                    try (ResultSet generatedKeys = insertPs.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            return generatedKeys.getInt(1); // TRẢ VỀ MACTGH MỚI
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return -1; 
+}
 
 }
 

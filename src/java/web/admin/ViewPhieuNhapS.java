@@ -60,4 +60,3 @@ public class ViewPhieuNhapS extends HttpServlet {
         req.getRequestDispatcher("/nhaphang_detail.jsp").forward(req, resp);
     }
 }
-

@@ -88,4 +88,30 @@ public void updatePassword(int maND, String newPass) throws SQLException, ClassN
         ps.executeUpdate();
     }
 }
+// Thêm hàm này vào file dao/UserDAO.java
+public User getUserById(int maND) {
+    User u = null;
+    String sql = "SELECT * FROM nguoidung WHERE MaND = ?"; 
+    
+    try (Connection con = DB.getCon(); 
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        
+        ps.setInt(1, maND);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            u = new User();
+            u.setMaND(rs.getInt("MaND"));
+            u.setLoaiNguoiDung(rs.getString("LoaiNguoiDung"));
+            u.setUser(rs.getString("TenDangNhap"));
+            u.setName(rs.getString("HoTen"));
+            u.setEmail(rs.getString("Email"));
+            u.setPhone(rs.getString("SoDienThoai"));
+            u.setAddress(rs.getString("DiaChi"));
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return u;
+}
 }

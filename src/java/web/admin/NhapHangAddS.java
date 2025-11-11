@@ -17,24 +17,14 @@ public class NhapHangAddS extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         
-        System.out.println("[NhapHangAddS] ===== SERVLET ĐƯỢC GỌI =====");
-        System.err.println("[NhapHangAddS] ===== SERVLET ĐƯỢC GỌI (stderr) =====");
-        
         HttpSession session = req.getSession(false);
         User user = (session != null) ? (User)session.getAttribute("account") : null;
         
-        System.out.println("[NhapHangAddS] Session: " + (session != null ? "có" : "không"));
-        System.out.println("[NhapHangAddS] User: " + (user != null ? user.getUser() : "null"));
-        System.out.println("[NhapHangAddS] LoaiNguoiDung: " + (user != null ? user.getLoaiNguoiDung() : "null"));
-        
         // 1. KIỂM TRA QUYỀN ADMIN
         if (user == null || !"QuanTriVien".equalsIgnoreCase(user.getLoaiNguoiDung())) { 
-            System.out.println("[NhapHangAddS] Redirect về login - không có quyền admin");
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
-        
-        System.out.println("[NhapHangAddS] Đã qua kiểm tra quyền, bắt đầu tải dữ liệu...");
 
         // Khởi tạo List rỗng để đảm bảo JSP không bị lỗi dù DAO thất bại
         List<?> emptyList = Collections.emptyList();
@@ -46,19 +36,14 @@ public class NhapHangAddS extends HttpServlet {
             // 2. TẢI DỮ LIỆU CẦN THIẾT CHO FORM
             
             // --- Tải danh sách NCC ---
-            System.out.println("[NhapHangAddS] Bắt đầu gọi getAllNhaCungCap()...");
+            // Ném lỗi SQL ra ngoài để bắt ở khối catch lớn hơn
             try {
-                 List<?> nccList = nccDao.getAllNhaCungCap();
-                 System.out.println("[NhapHangAddS] ✓ Đã tải được " + (nccList != null ? nccList.size() : 0) + " NCC");
-                 System.err.println("[NhapHangAddS] ✓ Đã tải được " + (nccList != null ? nccList.size() : 0) + " NCC (stderr)");
-                 req.setAttribute("nhaCungCapList", nccList); 
+                 req.setAttribute("nhaCungCapList", nccDao.getAllNhaCungCap()); 
             } catch (SQLException | ClassNotFoundException ex) {
                  // Gán List rỗng và thiết lập thông báo lỗi chi tiết
-                 System.err.println("[NhapHangAddS] ✗ Lỗi khi tải NCC: " + ex.getMessage());
-                 System.err.println("[NhapHangAddS] ✗ Stack trace:");
-                 ex.printStackTrace(); // Ghi lỗi chi tiết ra Log Server
                  req.setAttribute("nhaCungCapList", emptyList);
                  req.setAttribute("error", "Lỗi CSDL khi tải NCC. Vui lòng kiểm tra Log Server để xem chi tiết lỗi: " + ex.getMessage());
+                 ex.printStackTrace(); // Ghi lỗi chi tiết ra Log Server
             }
             
             // Tải danh sách Sản phẩm và Danh mục

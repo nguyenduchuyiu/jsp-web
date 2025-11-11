@@ -37,9 +37,13 @@ public class CartItem {
         return gia.multiply(new BigDecimal(soLuong));
     }
     
+
+        // Phương thức định dạng tiền tệ (sử dụng format cho đồng nhất)
+    // NHUNGKM
     // Phương thức định dạng tiền tệ (sử dụng format cho đồng nhất)
-    public String formatCurrency(BigDecimal amount) {
+    public static String formatCurrency(java.math.BigDecimal amount) {
         if (amount == null) return "0 VND";
         return String.format("%,.0f VND", amount.doubleValue());
     }
+    // ENDKM
 }

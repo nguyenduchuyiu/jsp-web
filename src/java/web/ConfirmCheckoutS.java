@@ -11,6 +11,10 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
+// NHUNGKM
+import dao.KhuyenMaiDAO;
+// END
+
 @WebServlet("/confirmcheckout")
 public class ConfirmCheckoutS extends HttpServlet {
     
@@ -54,6 +58,11 @@ public class ConfirmCheckoutS extends HttpServlet {
             BigDecimal shippingFee = new BigDecimal("30000");
             BigDecimal totalFinal = tongHang.add(shippingFee);
 
+            // --- NHUNGKM ---
+            KhuyenMaiDAO kmDAO = new KhuyenMaiDAO();
+            req.setAttribute("khuyenMaiList", kmDAO.getActiveKhuyenMai());            
+// ---------------END------------------------
+            
             // 3. Lưu thông tin cần thiết vào Session/Request
             session.setAttribute("orderItemsSession", selectedItems); 
             session.setAttribute("totalFinalSession", totalFinal); 
