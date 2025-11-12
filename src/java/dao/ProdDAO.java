@@ -226,24 +226,26 @@ public boolean deleteProduct(String maSp) {
     }
 }
 
-// Hàm 5: Lấy sản phẩm theo nhà cung cấp (dựa trên lịch sử nhập hàng)
+// Hàm 5: Lấy sản phẩm theo nhà cung cấp (dựa trên ThuongHieu = TenNCC)
 public List<Product> getProductsBySupplier(int maNCC) {
-    List<Product> list = new ArrayList<>();
-    // Lấy các sản phẩm đã từng được nhập từ nhà cung cấp này
-    String sql = "SELECT DISTINCT sp.* FROM sanpham sp "
-               + "INNER JOIN chitietphieunhap ct ON sp.MaSP = ct.MaSP "
-               + "INNER JOIN phieunhap pn ON ct.MaPN = pn.MaPN "
-               + "WHERE pn.MaNCC = ? "
-               + "ORDER BY sp.MaSP DESC";
-    try (Connection con = DB.getCon(); PreparedStatement ps = con.prepareStatement(sql)) {
+    List<Product> products = new ArrayList<>();
+    String sql = "SELECT sp.* FROM sanpham sp " +
+                "JOIN nhacungcap ncc ON CONVERT(sp.ThuongHieu USING utf8mb4) COLLATE utf8mb4_general_ci = " +
+                "CONVERT(ncc.TenNCC USING utf8mb4) COLLATE utf8mb4_general_ci " +
+                "WHERE ncc.MaNCC = ? ORDER BY sp.MaSP DESC";
+    
+    try (Connection con = DB.getCon(); 
+         PreparedStatement ps = con.prepareStatement(sql)) {
         ps.setInt(1, maNCC);
         ResultSet rs = ps.executeQuery();
+        
         while (rs.next()) {
-            list.add(mapProduct(rs));
+            products.add(mapProduct(rs));
         }
     } catch (Exception e) {
         e.printStackTrace();
     }
-    return list;
+    
+    return products;
 }
 }
