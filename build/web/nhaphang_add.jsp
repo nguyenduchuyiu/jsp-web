@@ -214,7 +214,6 @@
             setTimeout(() => {
                 const selectedOption = allOptions.find(opt => opt.value === this.value);
                 if (selectedOption) {
-                    console.log('Input event - Found option, MaNCC:', selectedOption.dataset.id);
                     // Gán MaNCC vào trường ẩn
                     if (maNCCHidden.value !== selectedOption.dataset.id) {
                         maNCCHidden.value = selectedOption.dataset.id;
@@ -231,18 +230,15 @@
         
         // Xử lý khi input mất focus hoặc hoàn thành việc chọn
         nccInput.addEventListener('change', function() {
-            console.log('Change event triggered, value:', this.value);
             // Tìm option có giá trị khớp với input hiện tại
             const selectedOption = allOptions.find(opt => opt.value === this.value);
             if (selectedOption) {
-                console.log('Found selected option, MaNCC:', selectedOption.dataset.id);
                 if (maNCCHidden.value !== selectedOption.dataset.id) {
                     maNCCHidden.value = selectedOption.dataset.id;
                     // Lọc sản phẩm theo nhà cung cấp
                     filterProductsBySupplier(selectedOption.dataset.id);
                 }
             } else {
-                 console.log('No matching option found');
                  // Nếu người dùng nhập tên NCC không tồn tại trong danh sách gốc
                  maNCCHidden.value = ''; 
                  // Hiển thị lại tất cả sản phẩm
@@ -262,35 +258,28 @@
             
             // Tránh gọi nhiều lần cùng lúc
             if (isFiltering) {
-                console.log('Đang lọc, bỏ qua request mới');
                 return;
             }
             
             isFiltering = true;
-            console.log('Đang lọc sản phẩm cho MaNCC:', maNCC);
             const url = '${pageContext.request.contextPath}/admin/getproductsbysupplier?maNCC=' + maNCC;
-            console.log('URL:', url);
             
             // Gọi AJAX để lấy danh sách sản phẩm
             fetch(url)
                 .then(response => {
-                    console.log('Response status:', response.status);
                     if (!response.ok) {
                         throw new Error('HTTP error! status: ' + response.status);
                     }
                     return response.json();
                 })
                 .then(products => {
-                    console.log('Sản phẩm nhận được:', products);
                     filteredProducts = products;
                     
                     // Lấy tất cả các dropdown sản phẩm
                     const productSelects = document.querySelectorAll('.product-select');
-                    console.log('Số lượng dropdown:', productSelects.length);
                     
-                    productSelects.forEach((select, index) => {
+                    productSelects.forEach((select) => {
                         const currentValue = select.value;
-                        console.log(`Dropdown ${index} - Trước khi cập nhật, số options:`, select.options.length);
                         
                         // Xóa tất cả options hiện tại
                         while (select.options.length > 0) {
@@ -302,24 +291,16 @@
                         defaultOption.value = '';
                         defaultOption.textContent = '-- Chọn Sản Phẩm --';
                         select.appendChild(defaultOption);
-                        console.log(`Dropdown ${index} - Đã thêm option mặc định, số options:`, select.options.length);
                         
                         // Thêm các sản phẩm
                         if (products && products.length > 0) {
-                            console.log(`Dropdown ${index} - Bắt đầu thêm ${products.length} sản phẩm`);
-                            products.forEach((product, pIndex) => {
+                            products.forEach(product => {
                                 const option = document.createElement('option');
                                 option.value = product.maSP;
                                 option.textContent = product.tenSP;
                                 select.appendChild(option);
-                                console.log(`Dropdown ${index} - Đã thêm sản phẩm ${pIndex + 1}: ${product.maSP} - ${product.tenSP}`);
                             });
-                        } else {
-                            console.warn(`Dropdown ${index} - Không có sản phẩm để thêm`);
                         }
-                        
-                        console.log(`Dropdown ${index} - Sau khi cập nhật, số options:`, select.options.length);
-                        console.log(`Dropdown ${index} - Options chi tiết:`, Array.from(select.options).map(opt => ({value: opt.value, text: opt.text})));
                         
                         // Giữ lại giá trị đã chọn nếu còn trong danh sách đã lọc
                         if (currentValue && products.some(p => p.maSP === currentValue)) {
@@ -336,7 +317,6 @@
                     }
                     productSelectHTML = filteredHTML;
                     
-                    console.log('Đã cập nhật dropdown sản phẩm');
                     isFiltering = false;
                 })
                 .catch(error => {
